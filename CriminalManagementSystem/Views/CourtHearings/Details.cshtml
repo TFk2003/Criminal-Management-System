@@ -1,0 +1,42 @@
+﻿@model CriminalManagementSystem.Models.CourtHearing
+
+@{
+    ViewBag.Title = "Court Hearing Details";
+}
+
+<h2>Court Hearing Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Case Number</dt>
+            <dd class="col-sm-9">@Model.Case.CaseNumber</dd>
+
+            <dt class="col-sm-3">Court</dt>
+            <dd class="col-sm-9">@Model.Court.CourtName</dd>
+
+            <dt class="col-sm-3">Hearing Date</dt>
+            <dd class="col-sm-9">@Model.HearingDate.ToString("f")</dd>
+
+            <dt class="col-sm-3">Hearing Type</dt>
+            <dd class="col-sm-9">@Model.HearingType</dd>
+
+            <dt class="col-sm-3">Room Number</dt>
+            <dd class="col-sm-9">@Model.RoomNumber</dd>
+
+            <dt class="col-sm-3">Outcome</dt>
+            <dd class="col-sm-9">@Model.Outcome</dd>
+
+            <dt class="col-sm-3">Next Hearing Date</dt>
+            <dd class="col-sm-9">@Model.NextHearingDate</dd>
+
+            <dt class="col-sm-3">Notes</dt>
+            <dd class="col-sm-9">@Model.Notes</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HearingID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>

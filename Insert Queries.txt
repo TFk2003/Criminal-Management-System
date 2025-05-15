@@ -1,0 +1,267 @@
+-- Insert standard roles
+INSERT INTO dbo.Roles (RoleName, Description, CreatedDate, ModifiedDate)
+VALUES 
+    ('Admin', 'System administrator with full access', GETDATE(), GETDATE()),
+    ('Manager', 'Can manage users and content', GETDATE(), GETDATE()),
+    ('Officer', 'Regular staff member with basic access', GETDATE(), GETDATE()),
+    ('Viewer', 'Read-only access to the system', GETDATE(), GETDATE()),
+    ('Auditor', 'Access to audit logs and reports', GETDATE(), GETDATE());
+
+INSERT INTO Witnesses (FirstName, MiddleName, LastName, DateOfBirth, Gender, Address, PhoneNumber, Email, RelationshipToCase, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate)
+VALUES 
+('Sarah', 'Elizabeth', 'Johnson', '1985-03-15', 'F', '123 Main St, Springfield, IL 62704', '(555) 123-4567', 'sjohnson@email.com', 'Neighbor of defendant', 101, '2023-01-10 09:15:22', 101, '2023-01-10 09:15:22'),
+('Michael', 'James', 'Chen', '1990-07-22', 'M', '456 Oak Ave, Springfield, IL 62704', '(555) 234-5678', 'mchen@email.com', 'Co-worker of victim', 102, '2023-01-12 14:30:45', 102, '2023-01-15 10:20:33'),
+('Patricia', 'Ann', 'Smith', '1978-11-05', 'F', '789 Pine Rd, Springfield, IL 62704', '(555) 345-6789', 'psmith@email.com', 'Eyewitness to incident', 103, '2023-01-15 11:45:10', 103, '2023-01-15 11:45:10'),
+('Robert', 'Lee', 'Williams', '1982-09-30', 'M', '321 Elm St, Springfield, IL 62704', '(555) 456-7890', 'rwilliams@email.com', 'Store clerk at crime scene', 104, '2023-01-18 16:20:15', 104, '2023-01-20 08:45:12'),
+('Elizabeth', 'Marie', 'King', '1995-04-18', 'F', '654 Maple Dr, Springfield, IL 62704', '(555) 567-8901', 'eking@email.com', 'Friend of victim', 105, '2023-01-20 10:10:30', 105, '2023-01-22 14:15:40'),
+('James', 'Thomas', 'Wilson', '1988-12-25', 'M', '987 Cedar Ln, Springfield, IL 62704', '(555) 678-9012', 'jwilson@email.com', 'Taxi driver who saw suspect', 106, '2023-01-22 13:25:50', 106, '2023-01-25 09:30:15'),
+('Lisa', 'Maria', 'Martinez', '1975-06-08', 'F', '741 Birch Blvd, Springfield, IL 62704', '(555) 789-0123', 'lmartinez@email.com', 'Security guard at building', 107, '2023-01-25 15:40:20', 107, '2023-01-28 11:20:45'),
+('Thomas', 'Edward', 'Brown', '1992-02-14', 'M', '852 Walnut Ct, Springfield, IL 62704', '(555) 890-1234', 'tbrown@email.com', 'Delivery person at scene', 108, '2023-01-28 09:15:30', 108, '2023-01-30 16:45:10'),
+('Jennifer', 'Lynn', 'Davis', '1980-08-03', 'F', '963 Spruce Way, Springfield, IL 62704', '(555) 901-2345', 'jdavis@email.com', 'Defendant''s ex-partner', 109, '2023-01-30 14:30:25', 109, '2023-02-02 10:15:40'),
+('David', 'William', 'Taylor', '1972-05-20', 'M', '159 Aspen Circle, Springfield, IL 62704', '(555) 012-3456', 'dtaylor@email.com', 'Doctor who treated victim', 110, '2023-02-02 11:20:35', 110, '2023-02-05 08:30:15');
+
+INSERT INTO Victims (FirstName, MiddleName, LastName, DateOfBirth, Gender, Address, PhoneNumber, Email, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate)
+VALUES 
+('Emily', 'Grace', 'Wilson', '1990-05-15', 'F', '123 Oak Street, Springfield, IL 62704', '(555) 123-4567', 'e.wilson@email.com', 101, '2023-01-10 09:15:22', 101, '2023-01-10 09:15:22'),
+('James', 'Robert', 'Smith', '1985-08-22', 'M', '456 Maple Avenue, Springfield, IL 62704', '(555) 234-5678', 'j.smith@email.com', 102, '2023-01-12 14:30:45', 102, '2023-01-15 10:20:33'),
+('Sophia', 'Marie', 'Johnson', '1978-11-30', 'F', '789 Pine Road, Springfield, IL 62704', '(555) 345-6789', 's.johnson@email.com', 103, '2023-01-15 11:45:10', 103, '2023-01-15 11:45:10'),
+('Michael', 'Thomas', 'Brown', '1982-04-18', 'M', '321 Elm Street, Springfield, IL 62704', '(555) 456-7890', 'm.brown@email.com', 104, '2023-01-18 16:20:15', 104, '2023-01-20 08:45:12'),
+('Olivia', 'Anne', 'Davis', '1995-07-25', 'F', '654 Cedar Lane, Springfield, IL 62704', '(555) 567-8901', 'o.davis@email.com', 105, '2023-01-20 10:10:30', 105, '2023-01-22 14:15:40'),
+('William', 'Joseph', 'Miller', '1988-12-10', 'M', '987 Birch Boulevard, Springfield, IL 62704', '(555) 678-9012', 'w.miller@email.com', 106, '2023-01-22 13:25:50', 106, '2023-01-25 09:30:15'),
+('Ava', 'Elizabeth', 'Taylor', '1975-03-08', 'F', '741 Walnut Court, Springfield, IL 62704', '(555) 789-0123', 'a.taylor@email.com', 107, '2023-01-25 15:40:20', 107, '2023-01-28 11:20:45'),
+('Benjamin', 'David', 'Anderson', '1992-06-14', 'M', '852 Spruce Way, Springfield, IL 62704', '(555) 890-1234', 'b.anderson@email.com', 108, '2023-01-28 09:15:30', 108, '2023-01-30 16:45:10'),
+('Isabella', 'Claire', 'Thomas', '1980-09-03', 'F', '963 Aspen Circle, Springfield, IL 62704', '(555) 901-2345', 'i.thomas@email.com', 109, '2023-01-30 14:30:25', 109, '2023-02-02 10:15:40'),
+('Daniel', 'William', 'White', '1972-02-20', 'M', '159 Redwood Drive, Springfield, IL 62704', '(555) 012-3456', 'd.white@email.com', 110, '2023-02-02 11:20:35', 110, '2023-02-05 08:30:15');
+
+
+INSERT INTO DocumentTypes (DocumentTypeID, TypeName, Description) VALUES
+(1, 'Passport', 'Government-issued travel document'),
+(2, 'Driver License', 'Driver identification and authorization'),
+(3, 'National ID', 'National identity card issued by government'),
+(4, 'Birth Certificate', 'Proof of birth and parentage'),
+(5, 'Utility Bill', 'Used for address verification'),
+(6, 'Tax Document', 'Used for income or tax verification'),
+(7, 'Employment Letter', 'Proof of employment'),
+(8, 'Bank Statement', 'Used for financial verification');
+
+INSERT INTO [CriminalManagementSystem].[dbo].[Facilities]
+([FacilityID], [FacilityName], [FacilityType], [Address], [PhoneNumber], [Capacity], [Warden])
+VALUES
+(1, 'Central City Prison', 'Prison', '123 Justice Ave, Central City', '555-0100', 500, 'John Doe'),
+(2, 'Metro Detention Center', 'Detention Center', '456 Liberty St, Metroville', '555-0200', 300, 'Jane Smith'),
+(3, 'Gotham Juvenile Center', 'Juvenile Center', '789 Youth Rd, Gotham', '555-0300', 150, 'Harvey Dent'),
+(4, 'Star Rehabilitation Facility', 'Rehabilitation', '101 Star Way, Star City', '555-0400', 200, 'Felicity Smoak'),
+(5, 'Arkham Secure Facility', 'Mental Health', '102 Arkham Blvd, Gotham', '555-0500', 100, 'Dr. Jonathan Crane'),
+(6, 'Coastal Holding Unit', 'Holding Unit', '303 Bayfront Ave, Coastline', '555-0600', 75, 'Barbara Gordon'),
+(7, 'Iron Heights Penitentiary', 'Prison', '404 Iron Heights Dr, Keystone', '555-0700', 600, 'Leonard Snart'),
+(8, 'East City Correctional Facility', 'Correctional', '505 Correction Ln, East City', '555-0800', 400, 'Lois Lane'),
+(9, 'Northview Women’s Facility', 'Women’s Prison', '606 Northview Blvd, Northview', '555-0900', 250, 'Kara Danvers'),
+(10, 'Riverdale Minimum Security', 'Minimum Security', '707 Riverdale Rd, Riverdale', '555-1000', 120, 'Archie Andrews');
+
+
+-- Chain of custody for the handgun (E-2023-001-01)
+INSERT INTO EvidenceChainOfCustody 
+(EvidenceID, CustodyDate, TakenBy, ReceivedBy, Reason, Notes)
+VALUES
+(1, '2023-05-16 02:15:00', 3, 3, 'Collection from crime scene', 'Initial collection by Officer Rodriguez'),
+(1, '2023-05-17 09:00:00', 3, 10, 'Transfer to ballistics lab', 'For firearm analysis'),
+(1, '2023-05-19 14:30:00', 10, 11, 'Return to evidence storage', 'Analysis complete');
+
+-- Chain of custody for the cocaine (E-2023-002-01)
+INSERT INTO EvidenceChainOfCustody 
+(EvidenceID, CustodyDate, TakenBy, ReceivedBy, Reason, Notes)
+VALUES
+(4, '2023-06-03 10:20:00', 5, 5, 'Collection during raid', 'Found in kitchen cabinet'),
+(4, '2023-06-04 13:15:00', 5, 12, 'Transfer to drug lab', 'For chemical analysis');
+
+
+
+-- Evidence for Case CR-2023-001 (Armed Robbery - John Smith)
+INSERT INTO Evidence 
+(EvidenceNumber, EvidenceTypeID, CaseID, Description, CollectionDate, CollectedBy, StorageLocation, Status, Notes)
+VALUES
+('E-2023-001-01', 11, 1, 'Smith & Wesson 9mm handgun', '2023-05-16 02:15:00', 3, 'Armory Locker A12', 'In Storage', 'Serial number filed off'),
+('E-2023-001-02', 1, 1, 'Blood sample from store floor', '2023-05-16 02:30:00', 4, 'Bio Lab Refrigerator 4B', 'Analyzed', 'DNA matches suspect'),
+('E-2023-001-03', 3, 1, 'Fingerprints from cash register', '2023-05-16 01:45:00', 3, 'Print Lab Drawer 7', 'Analyzed', 'Right thumb match');
+
+-- Evidence for Case CR-2023-002 (Drug Distribution - Maria Garcia)
+INSERT INTO Evidence 
+(EvidenceNumber, EvidenceTypeID, CaseID, Description, CollectionDate, CollectedBy, StorageLocation, Status, Notes)
+VALUES
+('E-2023-002-01', 14, 2, '1kg cocaine package', '2023-06-03 10:20:00', 5, 'Drug Vault Section D', 'In Storage', 'Street value ~$35,000'),
+('E-2023-002-02', 19, 2, 'Drug ledger notebook', '2023-06-03 10:25:00', 5, 'Documents Locker 22', 'Analyzed', 'Contains client list'),
+('E-2023-002-03', 7, 2, 'iPhone 13 Pro', '2023-06-03 10:30:00', 6, 'Digital Lab Safe 3', 'Pending Analysis', 'Passcode protected');
+
+-- Evidence for Case CR-2023-003 (Burglary - James Wilson)
+INSERT INTO Evidence 
+(EvidenceNumber, EvidenceTypeID, CaseID, Description, CollectionDate, CollectedBy, StorageLocation, Status, DispositionDate, DispositionMethod, Notes)
+VALUES
+('E-2023-003-01', 12, 3, 'Crowbar with paint transfer', '2023-04-10 15:10:00', 2, 'Toolmark Locker C5', 'Returned to Owner', '2023-06-10', 'Property Return', 'Matches window damage'),
+('E-2023-003-02', 13, 3, 'Nike Air Force 1 shoe print', '2023-04-10 15:30:00', 2, 'Print Lab Drawer 9', 'Analyzed', NULL, NULL, 'Size 11, matches suspect'),
+('E-2023-003-03', 16, 3, 'Stolen diamond necklace', '2023-05-22 11:00:00', 7, 'Property Room Safe 2', 'Returned to Owner', '2023-06-15', 'Property Return', 'Recovered from pawn shop');
+
+-- Evidence for Case CR-2023-004 (Fraud - Sarah Johnson)
+INSERT INTO Evidence 
+(EvidenceNumber, EvidenceTypeID, CaseID, Description, CollectionDate, CollectedBy, StorageLocation, Status, Notes)
+VALUES
+('E-2023-004-01', 17, 4, 'Fraudulent credit cards', '2023-07-05 09:45:00', 4, 'Documents Locker 18', 'In Storage', '12 cards with different names'),
+('E-2023-004-02', 8, 4, 'Laptop with financial records', '2023-07-05 10:00:00', 4, 'Digital Lab Safe 5', 'Analyzed', 'Encrypted drive cracked'),
+('E-2023-004-03', 18, 4, 'Bank statements printouts', '2023-07-06 14:20:00', 8, 'Documents Locker 18', 'Pending Analysis', 'Shows money laundering');
+
+-- Evidence for Case CR-2023-005 (Assault - Michael Lee)
+INSERT INTO Evidence 
+(EvidenceNumber, EvidenceTypeID, CaseID, Description, CollectionDate, CollectedBy, StorageLocation, Status, Notes)
+VALUES
+('E-2023-005-01', 1, 5, 'Bloody t-shirt from victim', '2023-08-13 01:30:00', 3, 'Bio Lab Refrigerator 2A', 'Analyzed', 'Blood matches victim'),
+('E-2023-005-02', 9, 5, 'Surveillance video USB', '2023-08-13 01:45:00', 3, 'Digital Lab Drawer 4', 'Analyzed', 'Shows entire altercation'),
+('E-2023-005-03', 10, 5, 'Broken beer bottle', '2023-08-13 02:00:00', 9, 'Biology Locker D3', 'In Storage', 'Suspect fingerprints found');
+
+
+
+-- Violent Crime Case (linked to John Smith)
+INSERT INTO Cases 
+(CaseNumber, CaseTitle, Description, CaseType, Status, Priority, OpeningDate, AssignedOfficerID, CreatedBy, CreatedDate)
+VALUES
+('CR-2023-001', 'Armed Robbery - Main St Convenience Store', 
+ 'Suspect used handgun to rob convenience store on 5/15/2023 at 11:30 PM. Stole $850 and cigarettes.', 
+ 'Violent Crime', 'Open', 'High', '2023-05-16', 3, 1, GETDATE());
+
+-- Drug Case (linked to Maria Garcia)
+INSERT INTO Cases 
+(CaseNumber, CaseTitle, Description, CaseType, Status, Priority, OpeningDate, AssignedOfficerID, CreatedBy, CreatedDate)
+VALUES
+('CR-2023-002', 'Narcotics Distribution - Oak Ave Apartment', 
+ 'Undercover operation revealed suspect selling cocaine from apartment. Raid conducted 6/2/2023.', 
+ 'Drug Crime', 'Under Investigation', 'Medium', '2023-06-03', 5, 1, GETDATE());
+
+-- Burglary Case (linked to James Wilson - solved)
+INSERT INTO Cases 
+(CaseNumber, CaseTitle, Description, CaseType, Status, Priority, OpeningDate, ClosingDate, AssignedOfficerID, CreatedBy, CreatedDate)
+VALUES
+('CR-2023-003', 'Residential Burglary - 789 Pine Rd', 
+ 'Home invasion with stolen jewelry and electronics. Suspect caught on security camera.', 
+ 'Property Crime', 'Closed', 'Medium', '2023-04-10', '2023-05-22', 2, 1, GETDATE());
+
+-- Fraud Case (linked to Sarah Johnson)
+INSERT INTO Cases 
+(CaseNumber, CaseTitle, Description, CaseType, Status, Priority, OpeningDate, AssignedOfficerID, CreatedBy, CreatedDate)
+VALUES
+('CR-2023-004', 'Identity Theft Ring Operation', 
+ 'Suspect involved in credit card fraud scheme using stolen identities. Multiple victims across state.', 
+ 'Financial Crime', 'Open', 'High', '2023-07-05', 4, 1, GETDATE());
+
+-- Assault Case (linked to Michael Lee)
+INSERT INTO Cases 
+(CaseNumber, CaseTitle, Description, CaseType, Status, Priority, OpeningDate, AssignedOfficerID, CreatedBy, CreatedDate)
+VALUES
+('CR-2023-005', 'Bar Fight - Serious Assault', 
+ 'Suspect caused serious injuries during altercation at Downtown Bar on 8/12/2023.', 
+ 'Violent Crime', 'Under Investigation', 'Medium', '2023-08-13', 3, 1, GETDATE());
+
+
+
+-- Link criminals to their cases
+INSERT INTO CaseCriminals (CaseID, CriminalID, RoleInCase)
+VALUES
+(1, 1, 'Primary Suspect'),
+(2, 2, 'Drug Supplier'),
+(3, 3, 'Burglar'),
+(4, 4, 'Fraud Ring Leader'),
+(5, 5, 'Assailant');
+
+
+
+-- Active Criminals
+INSERT INTO Criminals 
+(FirstName, MiddleName, LastName, DateOfBirth, Gender, Race, Height, Weight, EyeColor, HairColor, IdentifyingMarks, NationalID, SSN, LastKnownAddress, PhotoPath, FingerprintPath, IsActive, CreatedBy, CreatedDate)
+VALUES
+('John', 'Robert', 'Smith', '1985-03-15', 'M', 'White', 180.34, 85.5, 'Blue', 'Brown', 'Tattoo: Dragon on right arm', 'ID854321', '123-45-6789', '123 Main St, Anytown, USA', '/photos/john_smith.jpg', '/fingerprints/john_smith.fp', 1, 1, GETDATE()),
+
+('Maria', 'Luisa', 'Garcia', '1990-07-22', 'F', 'Hispanic', 165.10, 62.0, 'Brown', 'Black', 'Scar on left cheek', 'ID987654', '987-65-4321', '456 Oak Ave, Somewhere, USA', '/photos/maria_garcia.jpg', '/fingerprints/maria_garcia.fp', 1, 1, GETDATE()),
+
+('James', 'Edward', 'Wilson', '1978-11-05', 'M', 'Black', 175.26, 90.0, 'Brown', 'Black', 'Missing front tooth', 'ID654321', '456-78-9123', '789 Pine Rd, Nowhere, USA', '/photos/james_wilson.jpg', '/fingerprints/james_wilson.fp', 1, 1, GETDATE()),
+
+('Sarah', 'Elizabeth', 'Johnson', '1982-09-18', 'F', 'White', 170.18, 68.0, 'Green', 'Blonde', 'Tattoo: Rose on neck', 'ID321987', '789-12-3456', '321 Elm St, Anywhere, USA', '/photos/sarah_johnson.jpg', '/fingerprints/sarah_johnson.fp', 1, 1, GETDATE()),
+
+('Michael', 'David', 'Lee', '1975-12-30', 'M', 'Asian', 172.72, 75.0, 'Brown', 'Black', 'Birthmark on right hand', 'ID789123', '321-54-9876', '654 Maple Dr, Everywhere, USA', '/photos/michael_lee.jpg', '/fingerprints/michael_lee.fp', 1, 1, GETDATE()),
+
+-- Inactive Criminals (released or deceased)
+('Robert', 'William', 'Brown', '1968-04-12', 'M', 'White', 182.88, 95.0, 'Blue', 'Gray', 'Tattoo: Skull on chest', 'ID159753', '654-87-3219', NULL, '/photos/robert_brown.jpg', '/fingerprints/robert_brown.fp', 0, 1, GETDATE()),
+
+('Lisa', 'Marie', 'Davis', '1988-06-25', 'F', 'Black', 167.64, 70.0, 'Hazel', 'Brown', 'Pierced nose', 'ID357159', '951-62-8473', NULL, '/photos/lisa_davis.jpg', '/fingerprints/lisa_davis.fp', 0, 1, GETDATE());
+
+
+
+INSERT INTO [EvidenceTypes] ([TypeName], [Description])
+VALUES
+-- Biological Evidence
+('Blood', 'Blood samples, stains, or spatter patterns'),
+('DNA', 'Genetic material from hair, skin cells, saliva, etc.'),
+('Fingerprints', 'Latent, patent, or plastic fingerprints'),
+('Hair', 'Human or animal hair samples'),
+('Bodily Fluids', 'Semen, saliva, urine, vomit, etc.'),
+
+-- Digital Evidence
+('Computer', 'Hard drives, laptops, desktops'),
+('Mobile Device', 'Cell phones, tablets, smart devices'),
+('Storage Media', 'USB drives, memory cards, external drives'),
+('Digital Images', 'Photographs, videos from surveillance'),
+('GPS Data', 'Location history from devices or vehicles'),
+
+-- Physical Evidence
+('Firearm', 'Guns, bullets, casings, gunshot residue'),
+('Toolmark', 'Impressions from tools or instruments'),
+('Footwear', 'Shoe prints or impressions'),
+('Tire Tracks', 'Vehicle tire impressions'),
+('Clothing', 'Garments with potential evidence'),
+
+-- Drug Evidence
+('Narcotics', 'Illegal drugs or substances'),
+('Prescription Drugs', 'Medications relevant to case'),
+('Paraphernalia', 'Drug use or distribution equipment'),
+
+-- Document Evidence
+('Handwriting', 'Written or forged documents'),
+('Financial Records', 'Bank statements, receipts'),
+('Letters/Notes', 'Written communications'),
+
+-- Other Types
+('Soil', 'Dirt or mineral samples'),
+('Glass', 'Broken glass fragments'),
+('Paint', 'Paint chips or transfer evidence'),
+('Fibers', 'Textile or carpet fibers'),
+('Explosives', 'Bomb-making materials or residues');
+
+
+INSERT INTO [Charges] ([ChargeCode], [ChargeName], [Description], [SeverityLevel], [Statute])
+VALUES
+-- Violent Crimes
+('PC 187', 'Murder', 'Unlawful killing of a human being with malice aforethought', 'Felony', 'Penal Code 187'),
+('PC 211', 'Robbery', 'Taking property from another person through force or fear', 'Felony', 'Penal Code 211'),
+('PC 245', 'Assault with Deadly Weapon', 'Assault committed with a deadly weapon or force likely to produce great bodily injury', 'Felony', 'Penal Code 245(a)(1)'),
+('PC 261', 'Rape', 'Non-consensual sexual intercourse', 'Felony', 'Penal Code 261'),
+
+-- Property Crimes
+('PC 459', 'Burglary', 'Unlawful entry into a structure with intent to commit theft or felony', 'Felony', 'Penal Code 459'),
+('PC 487', 'Grand Theft', 'Theft of property valued over $950', 'Felony', 'Penal Code 487'),
+('PC 484', 'Petty Theft', 'Theft of property valued under $950', 'Misdemeanor', 'Penal Code 484'),
+
+-- Drug Crimes
+('HS 11350', 'Possession of Controlled Substance', 'Unlawful possession of narcotics without prescription', 'Felony', 'Health & Safety Code 11350'),
+('HS 11351', 'Possession for Sale', 'Possession of controlled substance with intent to sell', 'Felony', 'Health & Safety Code 11351'),
+('HS 11357', 'Possession of Marijuana', 'Possession of cannabis (amount determines severity)', 'Misdemeanor', 'Health & Safety Code 11357'),
+
+-- Weapons Crimes
+('PC 29800', 'Felon in Possession of Firearm', 'Possession of firearm by convicted felon', 'Felony', 'Penal Code 29800(a)(1)'),
+('PC 25400', 'Carrying Concealed Weapon', 'Carrying concealed firearm without permit', 'Misdemeanor', 'Penal Code 25400(a)'),
+
+-- Other Common Charges
+('PC 148', 'Resisting Arrest', 'Willfully resisting, delaying, or obstructing peace officer', 'Misdemeanor', 'Penal Code 148(a)(1)'),
+('PC 415', 'Disturbing the Peace', 'Fighting in public or unreasonable noise', 'Misdemeanor', 'Penal Code 415'),
+('PC 602', 'Trespassing', 'Unauthorized entry or remaining on property', 'Misdemeanor', 'Penal Code 602'),
+('VC 10851', 'Vehicle Theft', 'Theft or unauthorized use of vehicle', 'Felony', 'Vehicle Code 10851(a)'),
+
+-- White Collar Crimes
+('PC 470', 'Forgery', 'Creating or altering documents with intent to defraud', 'Felony', 'Penal Code 470'),
+('PC 476', 'Check Fraud', 'Writing bad checks with intent to defraud', 'Felony', 'Penal Code 476'),
+('PC 496', 'Receiving Stolen Property', 'Possessing property known to be stolen', 'Felony/Misdemeanor', 'Penal Code 496(a)');

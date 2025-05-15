@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.InmateBooking>
+
+@{
+    ViewBag.Title = "Inmate Bookings";
+}
+<h2>Inmate Bookings</h2>
+<p>
+    @Html.ActionLink("Create New Booking", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Booking Number</th>
+            <th>Criminal</th>
+            <th>Facility</th>
+            <th>Booking Date</th>
+            <th>Released Date</th>
+            <th>Status</th>
+            <th>Cell Number</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.BookingNumber</td>
+                <td>@(booking.Criminal?.FullName ?? "UnAssigned")</td>
+                <td>@(booking.Facility?.FacilityName ?? "UnAssigned")</td>
+                <td>@booking.BookingDate.ToShortDateString()</td>
+                <td>@booking.ReleasedDate</td>
+                <td>@booking.Status</td>
+                <td>@booking.CellNumber</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = booking.BookingID }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = booking.BookingID }, new { @class = "btn btn-warning btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

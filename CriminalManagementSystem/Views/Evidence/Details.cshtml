@@ -1,0 +1,106 @@
+﻿@model CriminalManagementSystem.Models.Evidence
+
+@{
+    ViewBag.Title = "Evidence Details";
+}
+
+<h2>Evidence: @Model.EvidenceNumber</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Evidence Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.EvidenceType.TypeName)</dt>
+                    <dd>@Html.DisplayFor(model => model.EvidenceType.TypeName)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Case.CaseNumber)</dt>
+                    <dd>@Html.ActionLink(Model.Case.CaseNumber, "Details", "Cases", new { id = Model.CaseID }, null)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+                    <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.CollectionDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.CollectionDate)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.CollectedByUser.FullName)</dt>
+                    <dd>@Html.DisplayFor(model => model.CollectedByUser.FullName)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Storage Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.StorageLocation)</dt>
+                    <dd>@Html.DisplayFor(model => model.StorageLocation)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Status)</dt>
+                    <dd>
+                        <span class="badge @(Model.Status == "In Storage" ? "bg-success" : "bg-warning")">
+                            @Html.DisplayFor(model => model.Status)
+                        </span>
+                    </dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.DispositionDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.DispositionDate)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.DispositionMethod)</dt>
+                    <dd>@Html.DisplayFor(model => model.DispositionMethod)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Notes)</dt>
+                    <dd>@Html.DisplayFor(model => model.Notes)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4>Chain of Custody</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.ChainOfCustody.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Released By</th>
+                        <th>Received By</th>
+                        <th>Transfer Reason</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var chain in Model.ChainOfCustody.OrderByDescending(c => c.CustodyDate))
+                    {
+                        <tr>
+                            <td>@chain.CustodyDate.ToString("g")</td>
+                            <td>@chain.ReleasedByUser.FullName</td>
+                            <td>@chain.ReceivedByUser.FullName</td>
+                            <td>@chain.TransferReason</td>
+                            <td>@chain.Notes</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No chain of custody records found.</p>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EvidenceID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Add Custody Record", "AddChainOfCustody", new { id = Model.EvidenceID }, new { @class = "btn btn-secondary" })
+    @Html.ActionLink("Back to List", "Index", new { caseId = Model.CaseID }, new { @class = "btn btn-primary" })
+</p>

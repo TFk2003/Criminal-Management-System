@@ -1,0 +1,64 @@
+﻿@model CriminalManagementSystem.Models.Arrest
+
+@{
+    ViewBag.Title = "Edit Arrest Record";
+}
+
+<h2>Edit Arrest Record</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ArrestID)
+    @Html.HiddenFor(model => model.CriminalID)
+    @Html.HiddenFor(model => model.ArrestingOfficerID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ArrestDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ArrestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            @Html.ValidationMessageFor(model => model.ArrestDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ArrestLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ArrestLocation, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ArrestLocation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ArrestDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.ArrestDescription, new { @class = "form-control", rows = "4" })
+            @Html.ValidationMessageFor(model => model.ArrestDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Status, new SelectList(new[] { "Pending", "Processed", "Dismissed", "Convicted" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Charges", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBox("SelectedCharges", (MultiSelectList)ViewBag.AllCharges, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
+}

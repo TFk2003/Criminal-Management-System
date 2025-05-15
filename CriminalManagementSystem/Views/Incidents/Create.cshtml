@@ -1,0 +1,130 @@
+﻿@model CriminalManagementSystem.Models.Incident
+
+@{
+    ViewBag.Title = "Create Incident";
+}
+<h2>Create Incident</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IncidentNumber)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IncidentType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.IncidentType,
+                new SelectList(new List<string> {
+                    "Burglary",
+                    "Assault",
+                    "Theft",
+                    "Vandalism",
+                    "Fraud",
+                    "Drug Offense",
+                    "Traffic Violation",
+                    "Domestic Disturbance",
+                    "Missing Person",
+                    "Other"
+                }),
+                "Select Incident Type",
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IncidentType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IncidentDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.IncidentDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.IncidentDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Location, new { @class = "form-control", placeholder = "Enter exact location/address" })
+            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 4, placeholder = "Provide detailed description of the incident" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Status,
+                new SelectList(new List<string> {
+                    "Reported",
+                    "Under Investigation",
+                    "Pending",
+                    "Resolved",
+                    "Closed"
+                }),
+                "Select Status",
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReportedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ReportedBy, new { @class = "form-control", placeholder = "Name of person reporting" })
+            @Html.ValidationMessageFor(model => model.ReportedBy, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReportedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ReportedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.ReportedDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AssignedOfficerID, "Assigned Officer", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AssignedOfficerID", null, "Select Officer", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AssignedOfficerID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-md-2">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+}
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(document).ready(function() {
+            // Set default values for audit fields
+            var now = new Date();
+            var formattedDate = now.getFullYear() + '-' +
+                               ('0' + (now.getMonth() + 1)).slice(-2) + '-' +
+                               ('0' + now.getDate()).slice(-2) + ' ' +
+                               ('0' + now.getHours()).slice(-2) + ':' +
+                               ('0' + now.getMinutes()).slice(-2) + ':' +
+                               ('0' + now.getSeconds()).slice(-2);
+            if (!$('#ReportedDate').val()) {
+                $('#ReportedDate').val(now.getFullYear() + '-' +
+                                     ('0' + (now.getMonth() + 1)).slice(-2) + '-' +
+                                     ('0' + now.getDate()).slice(-2));
+            }
+        });
+</script>
+}

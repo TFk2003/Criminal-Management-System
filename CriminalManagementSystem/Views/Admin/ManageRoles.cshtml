@@ -1,0 +1,85 @@
+﻿@model List<CriminalManagementSystem.Controllers.UserRoleViewModel>
+
+@{
+    ViewBag.Title = "Manage User Roles";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m[i].FullName)
+                            <small class="text-muted">@Html.DisplayFor(m => m[i].Username)</small>
+                            @Html.HiddenFor(m => m[i].UserID)
+                        </td>
+                        <td>
+                            <div class="role-selection-container">
+                                @for (int j = 0; j < Model[i].Roles.Count; j++)
+                                {
+                                    <div class="form-check">
+                                        @Html.HiddenFor(m => m[i].Roles[j].RoleID)
+                                        @Html.HiddenFor(m => m[i].Roles[j].RoleName)
+                                        @Html.CheckBoxFor(m => m[i].Roles[j].IsSelected,
+                                            new { @class = "form-check-input" })
+                                        <label class="form-check-label"
+                                               for="@Html.IdFor(m => m[i].Roles[j].IsSelected)">
+                                            @Model[i].Roles[j].RoleName
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save Changes" class="btn btn-primary" />
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Add select all/none functionality per user
+            $('.role-selection-container').each(function() {
+                var container = $(this);
+                container.prepend(
+                    '<div class="mb-2">' +
+                    '   <button type="button" class="btn btn-sm btn-outline-primary select-all">Select All</button>' +
+                    '   <button type="button" class="btn btn-sm btn-outline-secondary select-none">Clear</button>' +
+                    '</div>'
+                );
+            });
+
+            $(document).on('click', '.select-all', function() {
+                $(this).closest('.role-selection-container')
+                       .find('input[type="checkbox"]')
+                       .prop('checked', true);
+            });
+
+            $(document).on('click', '.select-none', function() {
+                $(this).closest('.role-selection-container')
+                       .find('input[type="checkbox"]')
+                       .prop('checked', false);
+            });
+        });
+    </script>
+}

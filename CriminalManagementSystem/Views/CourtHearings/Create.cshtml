@@ -1,0 +1,128 @@
+﻿@model CriminalManagementSystem.Models.CourtHearing
+
+@{
+    ViewBag.Title = "Schedule Court Hearing";
+}
+
+<h2>Schedule Court Hearing</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseID, "Case", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CaseID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CaseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourtID, "Court", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CourtID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CourtID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.HearingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    var hearingDateValue = Model?.HearingDate.ToString("yyyy-MM-dd") ?? "";
+                }
+                @Html.EditorFor(model => model.HearingDate, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        @type = "date",
+                        @value = hearingDateValue
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.HearingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.HearingType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.HearingType,
+                    new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Arraignment", Value = "Arraignment" },
+                        new SelectListItem { Text = "Preliminary Hearing", Value = "Preliminary Hearing" },
+                        new SelectListItem { Text = "Pre-Trial Conference", Value = "Pre-Trial Conference" },
+                        new SelectListItem { Text = "Trial", Value = "Trial" },
+                        new SelectListItem { Text = "Sentencing", Value = "Sentencing" },
+                        new SelectListItem { Text = "Motion Hearing", Value = "Motion Hearing" },
+                        new SelectListItem { Text = "Bail Hearing", Value = "Bail Hearing" },
+                        new SelectListItem { Text = "Status Conference", Value = "Status Conference" }
+                    }, "Value", "Text"),
+                    "Select Hearing Type",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HearingType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoomNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RoomNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Outcome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Outcome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Outcome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NextHearingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    var nextHearingDateValue = Model?.NextHearingDate?.ToString("yyyy-MM-dd") ?? "";
+                }
+                @Html.EditorFor(model => model.NextHearingDate, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        @type = "date",
+                        @value = nextHearingDateValue
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.NextHearingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", rows = 4 })
+                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            var now = new Date();
+            var formattedDate = now.getFullYear() + '-' +
+                               ('0' + (now.getMonth() + 1)).slice(-2) + '-' +
+                               ('0' + now.getDate()).slice(-2) + ' ' +
+                               ('0' + now.getHours()).slice(-2) + ':' +
+                               ('0' + now.getMinutes()).slice(-2) + ':' +
+                               ('0' + now.getSeconds()).slice(-2);
+        });
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@model CriminalManagementSystem.Models.Case
+
+@{
+    ViewBag.Title = "Case Details";
+}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4>Case: @Model.CaseNumber - @Model.CaseTitle</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                <span class="@(Model.Status == "Open" ? "bg-success" : "bg-danger")">
+                    @Model.Status
+                </span>
+            </dd>
+            <dt class="col-sm-3">Assigned Officer</dt>
+            <dd class="col-sm-9">@(Model.AssignedOfficer?.FullName ?? "Not assigned")</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.CaseDescription</dd>
+            <dt class="col-sm-3">Case Type</dt>
+            <dd class="col-sm-9">@Model.CaseType</dd>
+            <dt class="col-sm-3">Priority</dt>
+            <dd class="col-sm-9">
+                <span class="@(Model.Priority == "High" ? " bg-danger" :
+                        Model.Priority == "Medium" ? "bg-light" : "bg-info")">
+                    @Model.Priority
+                </span>
+            </dd>
+            <dt class="col-sm-3">Opening Date</dt>
+            <dd class="col-sm-9">@Model.OpeningDate.ToString("yyyy-MM-dd")</dd>
+
+            @if (Model.ClosingDate.HasValue)
+            {
+                <dt class="col-sm-3">Closing Date</dt>
+                <dd class="col-sm-9">@Model.ClosingDate.Value.ToString("yyyy-MM-dd")</dd>
+            }
+        </dl>
+    </div>
+</div>
+<div class="mt-4">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CaseID }, new { @class = "btn btn-warning" })
+    @if (Model.Status == "Open")
+    {
+        @Html.ActionLink("Close Case", "Close", new { id = Model.CaseID }, new { @class = "btn btn-danger" })
+    }
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>

@@ -1,0 +1,88 @@
+﻿@model CriminalManagementSystem.Models.Arrest
+
+@{
+    ViewBag.Title = "Create Arrest Record";
+}
+
+<h2>Create Arrest Record</h2>
+
+
+@using (Html.BeginForm("Create", "Arrests", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CriminalID, "Criminal", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CriminalID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CriminalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrestingOfficerID, "Arresting Officer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ArrestingOfficerID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ArrestingOfficerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrestDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArrestDate, new { htmlAttributes = new { @class = "form-control", type = "date", @Value = Model?.ArrestDate.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.ArrestDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrestLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArrestLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ArrestLocation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrestDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.ArrestDescription, new { @class = "form-control", rows = "4" })
+                @Html.ValidationMessageFor(model => model.ArrestDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Charges", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("selectedCharges", (MultiSelectList)ViewBag.Charges, new { @class = "form-control", size = 5 })
+                @Html.ValidationMessage("selectedCharges", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Status,
+                    new SelectList(new[] { "Pending", "Processed", "Dismissed", "Convicted" }),
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index", "Criminals", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var chargesSelected = $('#selectedCharges').val();
+                if (!chargesSelected || chargesSelected.length === 0) {
+                    alert('Please select at least one charge');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

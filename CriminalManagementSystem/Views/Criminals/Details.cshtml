@@ -1,0 +1,123 @@
+﻿@model CriminalManagementSystem.Models.Criminal
+@{
+    ViewBag.Title = "Criminal Details";
+}
+
+<h2>@Model.FullName</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Personal Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+                    <dd>@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
+                    <dd>@Html.DisplayFor(model => model.Gender)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Race)</dt>
+                    <dd>@Html.DisplayFor(model => model.Race)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.NationalID)</dt>
+                    <dd>@Html.DisplayFor(model => model.NationalID)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.SSN)</dt>
+                    <dd>@Html.DisplayFor(model => model.SSN)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.LastKnownAddress)</dt>
+                    <dd>@Html.DisplayFor(model => model.LastKnownAddress)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Physical Description</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Height)</dt>
+                    <dd>@Html.DisplayFor(model => model.Height) cm</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Weight)</dt>
+                    <dd>@Html.DisplayFor(model => model.Weight) kg</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.EyeColor)</dt>
+                    <dd>@Html.DisplayFor(model => model.EyeColor)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.HairColor)</dt>
+                    <dd>@Html.DisplayFor(model => model.HairColor)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.IdentifyingMarks)</dt>
+                    <dd>@Html.DisplayFor(model => model.IdentifyingMarks)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4>Aliases</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Aliases.Any())
+        {
+            <ul class="list-group">
+                @foreach (var alias in Model.Aliases)
+                {
+                    <li class="list-group-item">@alias.AliasName</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No aliases found.</p>
+        }
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4>Arrest Records</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Arrests.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Arrest Date</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var arrest in Model.Arrests)
+                    {
+                        <tr>
+                            <td>@arrest.ArrestDate.ToString("yyyy-MM-dd")</td>
+                            <td>@arrest.ArrestLocation</td>
+                            <td>@arrest.Status</td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", "Arrests", new { id = arrest.ArrestID }, new { @class = "btn btn-info btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No arrest records found.</p>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CriminalID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>

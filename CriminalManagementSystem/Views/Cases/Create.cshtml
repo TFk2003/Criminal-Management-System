@@ -1,0 +1,106 @@
+﻿@model CriminalManagementSystem.Models.Case
+
+@{
+    ViewBag.Title = "Create New Case";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Create", "Cases", FormMethod.Post, new { id = "caseForm" }))
+{
+    @Html.AntiForgeryToken()
+    if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary(false, "Please fix the following errors:")
+        </div>
+    }
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CaseNumber)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CaseTitle, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter case title" } })
+                @Html.ValidationMessageFor(model => model.CaseTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.CaseDescription, new { @class = "form-control", rows = 4, placeholder = "Enter case details" })
+                @Html.ValidationMessageFor(model => model.CaseDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CaseType,
+                    new SelectList(new[] { "Criminal", "Civil", "Administrative", "Investigation", "Other" }),
+                    "-- Select Case Type --",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CaseType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Status,
+                    new SelectList(new[] { "Open", "Under Investigation", "Pending Trial", "Closed", "Archived" }),
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Priority,
+                    new SelectList(new[] { "Low", "Medium", "High", "Critical" }),
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.OpeningDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OpeningDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.OpeningDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClosingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClosingDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.ClosingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssignedOfficerID, "Assigned Officer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AssignedOfficerID", null, "-- Select Officer --", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AssignedOfficerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#caseForm').submit(function (e) {
+                // Client-side validation
+                if (!$(this).valid()) {
+                    e.preventDefault();
+                    alert('Please fix validation errors');
+                }
+            });
+        });
+    </script>
+}

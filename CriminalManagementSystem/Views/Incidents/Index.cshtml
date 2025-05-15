@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.Incident>
+
+@{
+    ViewBag.Title = "Incidents";
+}
+
+<h2>Incidents</h2>
+
+<p>
+    @Html.ActionLink("Create New Incident", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Incident Number</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Assigned Officer</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IncidentNumber</td>
+                <td>@item.IncidentType</td>
+                <td>@item.IncidentDate.ToShortDateString()</td>
+                <td>@item.Location</td>
+                <td>@item.Status</td>
+                <td>@(item.AssignedOfficer?.FullName ?? "UnAssigned")</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.IncidentID }, new { @class = "btn btn-info btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

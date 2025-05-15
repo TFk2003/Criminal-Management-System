@@ -1,0 +1,518 @@
+-- Create the database
+CREATE DATABASE CriminalManagementSystem;
+GO
+
+USE CriminalManagementSystem;
+GO
+
+-- Tables for User Management and Security
+CREATE TABLE Roles (
+    RoleID INT PRIMARY KEY IDENTITY(1,1),
+    RoleName NVARCHAR(50) NOT NULL,
+    Description NVARCHAR(255),
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    Username NVARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    PhoneNumber NVARCHAR(20),
+    IsActive BIT DEFAULT 1,
+    LastLogin DATETIME,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE UserRoles (
+    UserRoleID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    RoleID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+    CONSTRAINT UC_UserRole UNIQUE (UserID, RoleID)
+);
+
+CREATE TABLE Permissions (
+    PermissionID INT PRIMARY KEY IDENTITY(1,1),
+    PermissionName NVARCHAR(50) NOT NULL,
+    Description NVARCHAR(255),
+    Module NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE RolePermissions (
+    RolePermissionID INT PRIMARY KEY IDENTITY(1,1),
+    RoleID INT NOT NULL,
+    PermissionID INT NOT NULL,
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+    FOREIGN KEY (PermissionID) REFERENCES Permissions(PermissionID),
+    CONSTRAINT UC_RolePermission UNIQUE (RoleID, PermissionID)
+);
+
+-- Tables for Criminal Records
+CREATE TABLE Criminals (
+    CriminalID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    MiddleName NVARCHAR(50),
+    LastName NVARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Gender CHAR(1) CHECK (Gender IN ('M', 'F', 'O')),
+    Race NVARCHAR(50),
+    Height DECIMAL(5,2), -- in cm
+    Weight DECIMAL(5,2), -- in kg
+    EyeColor NVARCHAR(50),
+    HairColor NVARCHAR(50),
+    IdentifyingMarks NVARCHAR(MAX),
+    NationalID NVARCHAR(50),
+    SSN NVARCHAR(50),
+    LastKnownAddress NVARCHAR(255),
+    PhotoPath NVARCHAR(255),
+    FingerprintPath NVARCHAR(255),
+    IsActive BIT DEFAULT 1,
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE CriminalAliases (
+    AliasID INT PRIMARY KEY IDENTITY(1,1),
+    CriminalID INT NOT NULL,
+    AliasName NVARCHAR(100) NOT NULL,
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID)
+);
+
+-- Tables for Arrest and Booking Management
+CREATE TABLE Arrests (
+    ArrestID INT PRIMARY KEY IDENTITY(1,1),
+    CriminalID INT NOT NULL,
+    ArrestingOfficerID INT NOT NULL,
+    ArrestDate DATETIME NOT NULL,
+    ArrestLocation NVARCHAR(255) NOT NULL,
+    ArrestDescription NVARCHAR(MAX),
+    Status NVARCHAR(50) DEFAULT 'Pending',
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    FOREIGN KEY (ArrestingOfficerID) REFERENCES Users(UserID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Charges (
+    ChargeID INT PRIMARY KEY IDENTITY(1,1),
+    ChargeCode NVARCHAR(50) NOT NULL,
+    ChargeName NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255),
+    SeverityLevel NVARCHAR(50),
+    Statute NVARCHAR(100)
+);
+
+CREATE TABLE ArrestCharges (
+    ArrestChargeID INT PRIMARY KEY IDENTITY(1,1),
+    ArrestID INT NOT NULL,
+    ChargeID INT NOT NULL,
+    BailAmount DECIMAL(15,2),
+    BailStatus NVARCHAR(50),
+    FOREIGN KEY (ArrestID) REFERENCES Arrests(ArrestID),
+    FOREIGN KEY (ChargeID) REFERENCES Charges(ChargeID)
+);
+
+-- Tables for Case File Management
+CREATE TABLE Cases (
+    CaseID INT PRIMARY KEY IDENTITY(1,1),
+    CaseNumber NVARCHAR(50) NOT NULL UNIQUE,
+    CaseTitle NVARCHAR(255) NOT NULL,
+    CaseDescription NVARCHAR(MAX),
+    CaseType NVARCHAR(100),
+    Status NVARCHAR(50) DEFAULT 'Open',
+    Priority NVARCHAR(50),
+    OpeningDate DATETIME DEFAULT GETDATE(),
+    ClosingDate DATETIME,
+    AssignedOfficerID INT,
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AssignedOfficerID) REFERENCES Users(UserID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE CaseCriminals (
+    CaseCriminalID INT PRIMARY KEY IDENTITY(1,1),
+    CaseID INT NOT NULL,
+    CriminalID INT NOT NULL,
+    RoleInCase NVARCHAR(100),
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    CONSTRAINT UC_CaseCriminal UNIQUE (CaseID, CriminalID)
+);
+
+-- Tables for Incident Reporting
+CREATE TABLE Incidents (
+    IncidentID INT PRIMARY KEY IDENTITY(1,1),
+    IncidentNumber NVARCHAR(50) NOT NULL UNIQUE,
+    IncidentType NVARCHAR(100) NOT NULL,
+    IncidentDate DATETIME NOT NULL,
+    Location NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    Status NVARCHAR(50) DEFAULT 'Reported',
+    ReportedBy NVARCHAR(100),
+    ReportedDate DATETIME DEFAULT GETDATE(),
+    AssignedOfficerID INT,
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AssignedOfficerID) REFERENCES Users(UserID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IncidentCases (
+    IncidentCaseID INT PRIMARY KEY IDENTITY(1,1),
+    IncidentID INT NOT NULL,
+    CaseID INT NOT NULL,
+    FOREIGN KEY (IncidentID) REFERENCES Incidents(IncidentID),
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    CONSTRAINT UC_IncidentCase UNIQUE (IncidentID, CaseID)
+);
+
+-- Tables for Evidence Tracking
+CREATE TABLE EvidenceTypes (
+    EvidenceTypeID INT PRIMARY KEY IDENTITY(1,1),
+    TypeName NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255)
+);
+
+CREATE TABLE Evidence (
+    EvidenceID INT PRIMARY KEY IDENTITY(1,1),
+    EvidenceNumber NVARCHAR(50) NOT NULL UNIQUE,
+    EvidenceTypeID INT NOT NULL,
+    CaseID INT NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    CollectionDate DATETIME NOT NULL,
+    CollectedBy INT NOT NULL,
+    StorageLocation NVARCHAR(255) NOT NULL,
+    Status NVARCHAR(50) DEFAULT 'In Storage',
+    DispositionDate DATETIME,
+    DispositionMethod NVARCHAR(100),
+    Notes NVARCHAR(MAX),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (EvidenceTypeID) REFERENCES EvidenceTypes(EvidenceTypeID),
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (CollectedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE EvidenceChainOfCustody (
+    ChainID INT PRIMARY KEY IDENTITY(1,1),
+    EvidenceID INT NOT NULL,
+    CustodyDate DATETIME NOT NULL,
+    ReceivedBy INT NOT NULL,
+    ReleasedBy INT NOT NULL,
+    TransferReason NVARCHAR(255) NOT NULL,
+    Notes NVARCHAR(MAX),
+    FOREIGN KEY (EvidenceID) REFERENCES Evidence(EvidenceID),
+    FOREIGN KEY (ReceivedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ReleasedBy) REFERENCES Users(UserID)
+);
+
+-- Tables for Witness Management
+CREATE TABLE Witnesses (
+    WitnessID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    MiddleName NVARCHAR(50),
+    LastName NVARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Gender CHAR(1) CHECK (Gender IN ('M', 'F', 'O')),
+    Address NVARCHAR(255),
+    PhoneNumber NVARCHAR(20),
+    Email NVARCHAR(100),
+    RelationshipToCase NVARCHAR(255),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE CaseWitnesses (
+    CaseWitnessID INT PRIMARY KEY IDENTITY(1,1),
+    CaseID INT NOT NULL,
+    WitnessID INT NOT NULL,
+    Statement NVARCHAR(MAX),
+    StatementDate DATETIME,
+    IsTestifying BIT DEFAULT 0,
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (WitnessID) REFERENCES Witnesses(WitnessID),
+    CONSTRAINT UC_CaseWitness UNIQUE (CaseID, WitnessID)
+);
+
+-- Tables for Court Scheduling and Tracking
+CREATE TABLE Courts (
+    CourtID INT PRIMARY KEY IDENTITY(1,1),
+    CourtName NVARCHAR(100) NOT NULL,
+    CourtType NVARCHAR(50),
+    Address NVARCHAR(255),
+    PhoneNumber NVARCHAR(20),
+    JudgeName NVARCHAR(100)
+);
+
+CREATE TABLE CourtHearings (
+    HearingID INT PRIMARY KEY IDENTITY(1,1),
+    CaseID INT NOT NULL,
+    CourtID INT NOT NULL,
+    HearingDate DATETIME NOT NULL,
+    HearingType NVARCHAR(100) NOT NULL,
+    RoomNumber NVARCHAR(50),
+    Outcome NVARCHAR(255),
+    NextHearingDate DATETIME,
+    Notes NVARCHAR(MAX),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (CourtID) REFERENCES Courts(CourtID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+-- Tables for Inmate Information Management
+CREATE TABLE Facilities (
+    FacilityID INT PRIMARY KEY IDENTITY(1,1),
+    FacilityName NVARCHAR(100) NOT NULL,
+    FacilityType NVARCHAR(50),
+    Address NVARCHAR(255),
+    PhoneNumber NVARCHAR(20),
+    Capacity INT,
+    Warden NVARCHAR(100)
+);
+
+CREATE TABLE InmateBookings (
+    BookingID INT PRIMARY KEY IDENTITY(1,1),
+    CriminalID INT NOT NULL,
+    FacilityID INT NOT NULL,
+    BookingNumber NVARCHAR(50) NOT NULL UNIQUE,
+    BookingDate DATETIME NOT NULL,
+    ReleaseDate DATETIME,
+    Status NVARCHAR(50) DEFAULT 'In Custody',
+    CellNumber NVARCHAR(50),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    FOREIGN KEY (FacilityID) REFERENCES Facilities(FacilityID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE InmateMedicalRecords (
+    MedicalRecordID INT PRIMARY KEY IDENTITY(1,1),
+    BookingID INT NOT NULL,
+    RecordDate DATETIME NOT NULL,
+    MedicalCondition NVARCHAR(255) NOT NULL,
+    Treatment NVARCHAR(255),
+    Physician NVARCHAR(100),
+    Notes NVARCHAR(MAX),
+    FOREIGN KEY (BookingID) REFERENCES InmateBookings(BookingID)
+);
+
+-- Tables for Warrant Management
+CREATE TABLE Warrants (
+    WarrantID INT PRIMARY KEY IDENTITY(1,1),
+    WarrantNumber NVARCHAR(50) NOT NULL UNIQUE,
+    CriminalID INT NOT NULL,
+    WarrantType NVARCHAR(50) NOT NULL,
+    IssueDate DATETIME NOT NULL,
+    ExpirationDate DATETIME,
+    IssuingJudge NVARCHAR(100),
+    Status NVARCHAR(50) DEFAULT 'Active',
+    Description NVARCHAR(MAX),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+-- Tables for Offender Tracking (Probation/Parole)
+CREATE TABLE ProbationOfficers (
+    OfficerID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    BadgeNumber NVARCHAR(50) NOT NULL UNIQUE,
+    Specialization NVARCHAR(100),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE ProbationRecords (
+    ProbationID INT PRIMARY KEY IDENTITY(1,1),
+    CriminalID INT NOT NULL,
+    OfficerID INT NOT NULL,
+    StartDate DATETIME NOT NULL,
+    EndDate DATETIME,
+    Terms NVARCHAR(MAX) NOT NULL,
+    Status NVARCHAR(50) DEFAULT 'Active',
+    Violations INT DEFAULT 0,
+    Notes NVARCHAR(MAX),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    FOREIGN KEY (OfficerID) REFERENCES ProbationOfficers(OfficerID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+-- Tables for Victim Information Management
+CREATE TABLE Victims (
+    VictimID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    MiddleName NVARCHAR(50),
+    LastName NVARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Gender CHAR(1) CHECK (Gender IN ('M', 'F', 'O')),
+    Address NVARCHAR(255),
+    PhoneNumber NVARCHAR(20),
+    Email NVARCHAR(100),
+    CreatedBy INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedBy INT,
+    ModifiedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID),
+    FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
+);
+
+CREATE TABLE CaseVictims (
+    CaseVictimID INT PRIMARY KEY IDENTITY(1,1),
+    CaseID INT NOT NULL,
+    VictimID INT NOT NULL,
+    Statement NVARCHAR(MAX),
+    ImpactStatement NVARCHAR(MAX),
+    IsContacted BIT DEFAULT 0,
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (VictimID) REFERENCES Victims(VictimID),
+    CONSTRAINT UC_CaseVictim UNIQUE (CaseID, VictimID)
+);
+
+-- Tables for Document Management
+CREATE TABLE DocumentTypes (
+    DocumentTypeID INT PRIMARY KEY IDENTITY(1,1),
+    TypeName NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255)
+);
+
+CREATE TABLE Documents (
+    DocumentID INT PRIMARY KEY IDENTITY(1,1),
+    DocumentTypeID INT NOT NULL,
+    CaseID INT,
+    CriminalID INT,
+    IncidentID INT,
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    FilePath NVARCHAR(255) NOT NULL,
+    UploadDate DATETIME DEFAULT GETDATE(),
+    UploadedBy INT NOT NULL,
+    FOREIGN KEY (DocumentTypeID) REFERENCES DocumentTypes(DocumentTypeID),
+    FOREIGN KEY (CaseID) REFERENCES Cases(CaseID),
+    FOREIGN KEY (CriminalID) REFERENCES Criminals(CriminalID),
+    FOREIGN KEY (IncidentID) REFERENCES Incidents(IncidentID),
+    FOREIGN KEY (UploadedBy) REFERENCES Users(UserID)
+);
+
+-- Views for common queries
+CREATE VIEW vw_CriminalDetails AS
+SELECT 
+    c.CriminalID, c.FirstName, c.MiddleName, c.LastName, c.DateOfBirth, c.Gender,
+    c.Race, c.Height, c.Weight, c.EyeColor, c.HairColor, c.IdentifyingMarks,
+    c.NationalID, c.SSN, c.LastKnownAddress, c.PhotoPath, c.FingerprintPath,
+    COUNT(DISTINCT a.ArrestID) AS ArrestCount,
+    COUNT(DISTINCT w.WarrantID) AS WarrantCount,
+    COUNT(DISTINCT cr.CaseID) AS CaseCount
+FROM Criminals c
+LEFT JOIN Arrests a ON c.CriminalID = a.CriminalID
+LEFT JOIN Warrants w ON c.CriminalID = w.CriminalID
+LEFT JOIN CaseCriminals cr ON c.CriminalID = cr.CriminalID
+GROUP BY 
+    c.CriminalID, c.FirstName, c.MiddleName, c.LastName, c.DateOfBirth, c.Gender,
+    c.Race, c.Height, c.Weight, c.EyeColor, c.HairColor, c.IdentifyingMarks,
+    c.NationalID, c.SSN, c.LastKnownAddress, c.PhotoPath, c.FingerprintPath;
+
+CREATE VIEW vw_ActiveCases AS
+SELECT 
+    c.CaseID, c.CaseNumber, c.CaseTitle, c.CaseType, c.Status, c.Priority,
+    c.OpeningDate, u.FirstName + ' ' + u.LastName AS AssignedOfficer,
+    COUNT(DISTINCT cc.CriminalID) AS CriminalCount,
+    COUNT(DISTINCT cw.WitnessID) AS WitnessCount,
+    COUNT(DISTINCT cv.VictimID) AS VictimCount
+FROM Cases c
+LEFT JOIN Users u ON c.AssignedOfficerID = u.UserID
+LEFT JOIN CaseCriminals cc ON c.CaseID = cc.CaseID
+LEFT JOIN CaseWitnesses cw ON c.CaseID = cw.CaseID
+LEFT JOIN CaseVictims cv ON c.CaseID = cv.CaseID
+WHERE c.Status = 'Open'
+GROUP BY 
+    c.CaseID, c.CaseNumber, c.CaseTitle, c.CaseType, c.Status, c.Priority,
+    c.OpeningDate, u.FirstName + ' ' + u.LastName;
+
+-- Stored Procedures
+CREATE PROCEDURE sp_GetCriminalCases
+    @CriminalID INT
+AS
+BEGIN
+    SELECT 
+        c.CaseID, c.CaseNumber, c.CaseTitle, c.CaseType, c.Status,
+        c.OpeningDate, c.ClosingDate, cc.RoleInCase
+    FROM Cases c
+    JOIN CaseCriminals cc ON c.CaseID = cc.CaseID
+    WHERE cc.CriminalID = @CriminalID
+    ORDER BY c.OpeningDate DESC;
+END;
+GO
+
+CREATE PROCEDURE sp_GetCaseEvidence
+    @CaseID INT
+AS
+BEGIN
+    SELECT 
+        e.EvidenceID, e.EvidenceNumber, et.TypeName, e.Description,
+        e.CollectionDate, u.FirstName + ' ' + u.LastName AS CollectedBy,
+        e.StorageLocation, e.Status, e.DispositionDate, e.DispositionMethod
+    FROM Evidence e
+    JOIN EvidenceTypes et ON e.EvidenceTypeID = et.EvidenceTypeID
+    JOIN Users u ON e.CollectedBy = u.UserID
+    WHERE e.CaseID = @CaseID
+    ORDER BY e.CollectionDate DESC;
+END;
+GO
+
+-- Indexes for performance optimization
+CREATE INDEX IX_Criminals_LastName ON Criminals(LastName);
+CREATE INDEX IX_Criminals_NationalID ON Criminals(NationalID);
+CREATE INDEX IX_Cases_CaseNumber ON Cases(CaseNumber);
+CREATE INDEX IX_Cases_Status ON Cases(Status);
+CREATE INDEX IX_Arrests_CriminalID ON Arrests(CriminalID);
+CREATE INDEX IX_Arrests_ArrestDate ON Arrests(ArrestDate);
+CREATE INDEX IX_Warrants_CriminalID ON Warrants(CriminalID);
+CREATE INDEX IX_Warrants_Status ON Warrants(Status);
+CREATE INDEX IX_Evidence_CaseID ON Evidence(CaseID);
+CREATE INDEX IX_Documents_CaseID ON Documents(CaseID);

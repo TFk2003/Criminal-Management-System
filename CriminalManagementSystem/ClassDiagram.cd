@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CriminalManagementSystem.Models.Arrest" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAEABBAAAABAAEAAgAAAgAAAAABAgAAAEAAAAM=</HashCode>
+      <FileName>Models\Arrest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArrestingOfficer" />
+      <Property Name="Criminal" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ArrestCharges" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Charge" Collapsed="true">
+    <Position X="6.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIIAABgAAAgAAAACAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Models\Arrest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ArrestCharges" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.ArrestCharge" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAgEAEAAQAAAAABCAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Arrest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Charge" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Case" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEACAAEAAARAAAEAAAAEABAAkAAAAAiQgAgCBAAQCE=</HashCode>
+      <FileName>Models\Case.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AssignedOfficer" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CaseVictims" />
+      <Property Name="CaseWitnesses" />
+      <Property Name="CaseCriminals" />
+      <Property Name="Evidence" />
+      <Property Name="CourtHearings" />
+      <Property Name="Documents" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.CaseCriminal" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAFAAAAABAAAAAAAAAAAAAAABAAAAABAAAAA=</HashCode>
+      <FileName>Models\Case.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="Criminal" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.CaseVictim" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAgAAAAAAAACAAAAAAAAASEAABQAAAA=</HashCode>
+      <FileName>Models\CaseVictim.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Victim" />
+      <Property Name="Case" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.CaseWitness" Collapsed="true">
+    <Position X="3.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAABAAAAAAAAIAAAAAAAACCAAAAAAAQAAAABAEAAA=</HashCode>
+      <FileName>Models\CaseWitness.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="Witness" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Court" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAQBAAAAAAAAQAAAAAAAAAACAAAAAAAAGAA=</HashCode>
+      <FileName>Models\Court.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CourtHearings" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.CourtHearing" Collapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACgCAAAEEUAAAAAAABAIAEAAgIAAAAAAgAAABAAAAE=</HashCode>
+      <FileName>Models\CourtHearing.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="Court" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Criminal" Collapsed="true">
+    <Position X="13.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAACEAABgAABISMEAEwAAAAAiAQAAABAgAAAAQAAkk=</HashCode>
+      <FileName>Models\Criminal.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Warrants" />
+      <Property Name="Arrests" />
+      <Property Name="Aliases" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.CriminalAlias" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAgAAAAAAAAAAAAAAABAAAAAAAAgAA=</HashCode>
+      <FileName>Models\Criminal.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Criminal" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Document" Collapsed="true">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAAAABBAoQEAAAAAAAAAAAAKAAAABAABIABAAAAA=</HashCode>
+      <FileName>Models\Document.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="DocumentType" />
+      <Property Name="Criminal" />
+      <Property Name="Incident" />
+      <Property Name="UploadedByUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.DocumentType" Collapsed="true">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAgAAAAAAAAAAAAAAAAABACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DocumentType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Documents" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Evidence" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgCgCAAkACAgAAAAgAAIAAAAQkAAAgAEAgAAABAAAAE=</HashCode>
+      <FileName>Models\Evidence.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="EvidenceType" />
+      <Property Name="CollectedByUser" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ChainOfCustody" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.EvidenceType" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAABAEQAAAAAAAAAA=</HashCode>
+      <FileName>Models\Evidence.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Evidences" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.EvidenceChainOfCustody" Collapsed="true">
+    <Position X="8.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgCAAAAAAAAgACEAAAAAAQAAgAkAAAAA=</HashCode>
+      <FileName>Models\Evidence.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ReceivedByUser" />
+      <Property Name="ReleasedByUser" />
+      <Property Name="Evidence" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Facility" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAACQAACAAAgAAACAAggAAAAAAA=</HashCode>
+      <FileName>Models\Facility.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="InmateBookings" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Incident" Collapsed="true">
+    <Position X="10" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAiAAEBAAgAEAAAIIABAAAAkAAAAAAAgAACAAAAAE=</HashCode>
+      <FileName>Models\Incident.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AssignedOfficer" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="IncidentCases" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.IncidentCase" Collapsed="true">
+    <Position X="3.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAABAAAIA=</HashCode>
+      <FileName>Models\IncidentCase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Case" />
+      <Property Name="Incident" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.InmateBooking" Collapsed="true">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <AssociationLine Name="InmateMedicalRecords" Type="CriminalManagementSystem.Models.InmateMedicalRecord">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.782" Y="0.108" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAICAAEABAIAKAAAAgCAAAAAgAAAAABAgAAAAIAAAE=</HashCode>
+      <FileName>Models\InmateBooking.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="InmateMedicalRecords" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.InmateMedicalRecord" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAQAAAAAJAAAAAABAAEAAAAAAAAAACAAAAQAAAAA=</HashCode>
+      <FileName>Models\InmateMedicalRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InmateBooking" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.ProbationOfficer" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <AssociationLine Name="ProbationRecords" Type="CriminalManagementSystem.Models.ProbationRecord">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.273" Y="0.213" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAEAAAAAAgAAAAEBAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\ProbationOfficer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProbationRecords" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.ProbationRecord" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <AssociationLine Name="Criminal" Type="CriminalManagementSystem.Models.Criminal" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.5" Y="5.187" />
+        <Point X="7" Y="5.187" />
+        <Point X="7" Y="4.75" />
+        <Point X="7.84" Y="4.75" Type="JumpStart" />
+        <Point X="8.146" Y="4.75" Type="JumpEnd" />
+        <Point X="11.917" Y="4.75" Type="JumpStart" />
+        <Point X="12.083" Y="4.75" Type="JumpEnd" />
+        <Point X="13.354" Y="4.75" Type="JumpStart" />
+        <Point X="13.521" Y="4.75" Type="JumpEnd" />
+        <Point X="13.792" Y="4.75" Type="JumpStart" />
+        <Point X="13.958" Y="4.75" Type="JumpEnd" />
+        <Point X="15.375" Y="4.75" />
+        <Point X="15.375" Y="1.625" />
+        <Point X="15" Y="1.625" />
+        <Point X="15" Y="2" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gAAgCAAEABAAAAAAAAAAAAAgAgAEAAABAgAAAEABQAE=</HashCode>
+      <FileName>Models\ProbationRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Criminal" />
+      <Property Name="ProbationOfficer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.User" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAEAAACACAIAAEQAAQAgAAgAAAAgAAgAAAAAAAAg=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserRoles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Role" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAgAAAAAAAAAAAABgAAAAgAAgAAEAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="RolePermissions" />
+      <Property Name="UserRoles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.UserRole" Collapsed="true">
+    <Position X="6.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAIAAAAAAAAAEAAAAAgAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Role" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Permission" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAACAAAAEAAAABAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="RolePermissions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.RolePermission" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIEAAAAAAAAEAAEAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Permission" />
+      <Property Name="Role" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Victim" Collapsed="true">
+    <Position X="11.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAACAAAICAAAAQQAAAAgAQAAACAiAAAAAAQAk=</HashCode>
+      <FileName>Models\Victim.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CaseVictims" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Warrant" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAUABAgAAAAAAEBAAAAQgEAAAABAgAAAAAAAAE=</HashCode>
+      <FileName>Models\Warrant.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Criminal" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CriminalManagementSystem.Models.Witness" Collapsed="true">
+    <Position X="13.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAACAAAIKAAAAQQAAAAgAQAAICAgAAAAAAACk=</HashCode>
+      <FileName>Models\Witness.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CaseWitnesses" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

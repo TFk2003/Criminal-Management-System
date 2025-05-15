@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Quick Links</h3>
+        <ul>
+            <li>@Html.ActionLink("Manage Users", "Users")</li>
+            <li>@Html.ActionLink("Manage Roles", "Roles")</li>
+            <li>@Html.ActionLink("Manage Permissions", "Permissions")</li>
+            <li>@Html.ActionLink("Manage User Roles", "ManageRoles")</li>
+        </ul>
+    </div>
+</div>

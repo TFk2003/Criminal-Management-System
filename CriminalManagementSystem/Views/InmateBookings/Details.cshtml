@@ -1,0 +1,43 @@
+﻿@model CriminalManagementSystem.Models.InmateBooking
+
+@{
+    ViewBag.Title = "Booking Details";
+}
+
+<h2>Booking Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Booking Number</dt>
+        <dd>@Model.BookingNumber</dd>
+
+        <dt>Criminal</dt>
+        <dd>@(Model.Criminal?.FullName ?? "UnAssigned")</dd>
+        <dt>Facility</dt>
+        <dd>@(Model.Facility?.FacilityName ?? "UnAssigned")</dd>
+
+        <dt>Booking Date</dt>
+        <dd>@Model.BookingDate.ToShortDateString()</dd>
+
+        <dt>Released Date</dt>
+        <dd>@Model.ReleasedDate</dd>
+
+        <dt>Status</dt>
+        <dd>@Model.Status</dd>
+        <dt>Cell Number</dt>
+        <dd>@Model.CellNumber</dd>
+
+        <dt>Medical Records</dt>
+        <dd>
+            <ul>
+                @foreach (var rec in Model.InmateMedicalRecords)
+                {
+                    <li>@rec.MedicalCondition - @rec.Notes</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+</div>

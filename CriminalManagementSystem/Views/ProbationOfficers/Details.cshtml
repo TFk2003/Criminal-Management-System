@@ -1,0 +1,42 @@
+﻿@model CriminalManagementSystem.Models.ProbationOfficer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProbationOfficer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BadgeNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BadgeNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Specialization)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Specialization)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OfficerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

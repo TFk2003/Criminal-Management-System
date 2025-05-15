@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.Warrant>
+
+@{
+    ViewBag.Title = "Warrants";
+}
+
+<h2>Warrants</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Warrant #</th>
+            <th>Criminal</th>
+            <th>Type</th>
+            <th>Issue Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.WarrantNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Criminal.FullName)</td>
+                <td>@Html.DisplayFor(modelItem => item.WarrantType)</td>
+                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
+                <td>
+                    <span class="badge @(item.Status == "Active" ? "bg-success" : "bg-danger")">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </span>
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.WarrantID }, new { @class = "btn btn-info btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

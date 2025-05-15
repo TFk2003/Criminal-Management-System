@@ -1,0 +1,264 @@
+﻿@model CriminalManagementSystem.Models.InmateBooking
+
+@{
+    ViewBag.Title = "Edit Booking";
+}
+
+<h2>Edit Booking</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.BookingID)
+    @Html.HiddenFor(model => model.BookingNumber)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CriminalID, "Criminal", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CriminalID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CriminalID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FacilityID, "Facility", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("FacilityID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FacilityID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                var bookingDateValue = Model.BookingDate != DateTime.MinValue
+                    ? Model.BookingDate.ToString("yyyy-MM-ddTHH:mm")
+                    : "";
+            }
+            <input type="datetime-local" class="form-control"
+                   id="BookingDate" name="BookingDate"
+                   value="@bookingDateValue" />
+            @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleasedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                var releasedDateValue = Model.ReleasedDate.HasValue
+                    ? Model.ReleasedDate.Value.ToString("yyyy-MM-ddTHH:mm")
+                    : "";
+            }
+            <input type="datetime-local" class="form-control"
+                   id="ReleasedDate" name="ReleasedDate"
+                   value="@releasedDateValue" />
+            @Html.ValidationMessageFor(model => model.ReleasedDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Status,
+                new SelectList(new List<string> {
+                    "In Custody",
+                    "Released",
+                    "Transferred",
+                    "Medical Hold",
+                    "Administrative Segregation"
+                }),
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CellNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CellNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <h4>Medical Records</h4>
+            <div id="medicalRecords">
+                @if (Model.InmateMedicalRecords != null && Model.InmateMedicalRecords.Any())
+                {
+                    for (int i = 0; i < Model.InmateMedicalRecords.Count; i++)
+                    {
+                        <div class="medical-record-entry well" style="margin-bottom: 15px; padding: 15px;">
+                            @Html.HiddenFor(model => model.InmateMedicalRecords[i].MedicalRecordID)
+                            @Html.HiddenFor(model => model.InmateMedicalRecords[i].BookingID)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InmateMedicalRecords[i].RecordDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @{
+                                        var recordDateValue = Model.InmateMedicalRecords[i].RecordDate.ToString("yyyy-MM-ddTHH:mm");
+                                    }
+                                    <input type="datetime-local" class="form-control"
+                                           name="InmateMedicalRecords[@i].RecordDate"
+                                           value="@recordDateValue" />
+                                    @Html.ValidationMessageFor(model => model.InmateMedicalRecords[i].RecordDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InmateMedicalRecords[i].MedicalCondition, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.InmateMedicalRecords[i].MedicalCondition, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.InmateMedicalRecords[i].MedicalCondition, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InmateMedicalRecords[i].Treatment, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.InmateMedicalRecords[i].Treatment, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.InmateMedicalRecords[i].Treatment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InmateMedicalRecords[i].Physician, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.InmateMedicalRecords[i].Physician, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.InmateMedicalRecords[i].Physician, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InmateMedicalRecords[i].Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.InmateMedicalRecords[i].Notes, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.InmateMedicalRecords[i].Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="button" class="btn btn-danger btn-sm remove-medical-record">Remove Record</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="medical-record-entry well" style="margin-bottom: 15px; padding: 15px;">
+                        <input type="hidden" name="InmateMedicalRecords[0].MedicalRecordID" value="0" />
+                        <input type="hidden" name="InmateMedicalRecords[0].BookingID" value="@Model.BookingID" />
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Record Date</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="datetime-local" name="InmateMedicalRecords[0].RecordDate" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Medical Condition</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="InmateMedicalRecords[0].MedicalCondition" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Treatment</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="InmateMedicalRecords[0].Treatment" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Physician</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="InmateMedicalRecords[0].Physician" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Notes</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="3" name="InmateMedicalRecords[0].Notes" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button type="button" id="addMedicalRecord" class="btn btn-info">Add Medical Record</button>
+        </div>
+    </div>
+
+    <div class="form-group mt-md-2">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            var recordCount = @(Model.InmateMedicalRecords?.Count ?? 0);
+
+            $('#addMedicalRecord').click(function() {
+                var newIndex = recordCount++;
+                var newEntry = $('.medical-record-entry:first').clone();
+
+                newEntry.find('input[type!="hidden"], textarea').val('');
+
+                newEntry.find('[name]').each(function() {
+                    var name = $(this).attr('name')
+                        .replace(/\[\d+\]/g, '[' + newIndex + ']');
+                    $(this).attr('name', name);
+                });
+
+                newEntry.find('[id]').each(function() {
+                    var id = $(this).attr('id')
+                        .replace(/_\d+__/g, '_' + newIndex + '__');
+                    $(this).attr('id', id);
+                });
+
+                newEntry.find('input[name$=".MedicalRecordID"]').val('0');
+
+                $('#medicalRecords').append(newEntry);
+            });
+
+            $(document).on('click', '.remove-medical-record', function() {
+                $(this).closest('.medical-record-entry').remove();
+
+                $('.medical-record-entry').each(function(index) {
+                    $(this).find('[name]').each(function() {
+                        var name = $(this).attr('name')
+                            .replace(/\[\d+\]/g, '[' + index + ']');
+                        $(this).attr('name', name);
+                    });
+
+                    $(this).find('[id]').each(function() {
+                        var id = $(this).attr('id')
+                            .replace(/_\d+__/g, '_' + index + '__');
+                        $(this).attr('id', id);
+                    });
+                });
+
+                recordCount = $('.medical-record-entry').length;
+            });
+        });
+        $(document).ready(function () {
+            // Format dates on page load
+            $('input[type="datetime-local"]').each(function () {
+                var dateValue = $(this).val();
+                if (dateValue) {
+                    // Convert from .NET format to HTML5 format if needed
+                    var date = new Date(dateValue);
+                    if (!isNaN(date.getTime())) {
+                        var formatted = date.toISOString().slice(0, 16);
+                        $(this).val(formatted);
+                    }
+                }
+            });
+    </script>
+}

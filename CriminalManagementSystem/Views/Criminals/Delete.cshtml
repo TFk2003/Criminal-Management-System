@@ -1,0 +1,30 @@
+﻿@model CriminalManagementSystem.Models.Criminal
+
+@{
+    ViewBag.Title = "Delete Criminal";
+}
+
+<h2>Delete Criminal</h2>
+
+<h3>Are you sure you want to deactivate this criminal record?</h3>
+<div>
+    <h4>@Model.FullName</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Date of Birth</dt>
+        <dd>@(Model.DateOfBirth?.ToString("d") ?? "Unknown")</dd>
+        <dt>Last Known Address</dt>
+        <dd>@Model.LastKnownAddress</dd>
+    </dl>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Deactivate" class="btn btn-danger" />
+            @Html.ActionLink("Cancel", "Details", new { id = Model.CriminalID }, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

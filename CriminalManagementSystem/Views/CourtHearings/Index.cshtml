@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.CourtHearing>
+
+@{
+    ViewBag.Title = "Court Hearings";
+    var caseId = ViewBag.CaseId as int?;
+    var caseNumber = ViewBag.CaseNumber as string;
+}
+
+<h2>Court Hearings @(caseNumber != null ? $"for Case: {caseNumber}" : "")</h2>
+
+<p>
+    @Html.ActionLink("Schedule New Hearing", "Create", new { caseId }, new { @class = "btn btn-primary" })
+    @if (caseId.HasValue)
+    {
+        @Html.ActionLink("Back to Case", "Details", "Cases", new { id = caseId }, new { @class = "btn btn-secondary" })
+    }
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HearingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Court.CourtName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HearingType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Outcome)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HearingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Court.CourtName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HearingType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Outcome)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.HearingID }, new { @class = "btn btn-info btn-sm" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.HearingID }, new { @class = "btn btn-warning btn-sm" })
+            </td>
+        </tr>
+    }
+
+</table>

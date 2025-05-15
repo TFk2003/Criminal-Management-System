@@ -1,0 +1,102 @@
+﻿@model CriminalManagementSystem.Models.Document
+
+@{
+    ViewBag.Title = "Upload Document";
+}
+
+<h2>Upload Document</h2>
+
+@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Document</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DocumentTypeID, "DocumentTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DocumentTypeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DocumentTypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CaseID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CaseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CriminalID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CriminalID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CriminalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IncidentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IncidentID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IncidentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 4 })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Document File</label>
+            <div class="col-md-10">
+                <input type="file" name="file" class="form-control" required />
+                @if (ViewData.ModelState["file"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["file"].Errors.First().ErrorMessage</span>
+                }
+            </div>
+        </div>
+        @if (ViewBag.UploadError != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.UploadError
+            </div>
+        }
+        <div class="form-group mt-md-2">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                console.log("Form submitted");
+                // You can also inspect the FormData in browser console
+                var formData = new FormData(this);
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+            });
+            $('form').submit(function() {
+                if (!$('input[type=file]').val()) {
+                    alert('Please select a file to upload');
+                    return false;
+                }
+            });
+        });
+    </script>
+}

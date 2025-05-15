@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.Arrest>
+
+@{
+    ViewBag.Title = "Arrest Records";
+}
+
+<h2>Arrest Records</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Arrest Date</th>
+            <th>Criminal</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ArrestDate.ToString("g")</td>
+                <td>@(item.Criminal.FirstName + ' ' + item.Criminal.MiddleName + ' ' + item.Criminal.LastName)</td>
+                <td>@item.ArrestLocation</td>
+                <td>@item.Status</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ArrestID }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArrestID }, new { @class = "btn btn-warning btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

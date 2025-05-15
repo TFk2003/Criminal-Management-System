@@ -1,0 +1,74 @@
+﻿@model CriminalManagementSystem.Models.Victim
+
+@{
+    ViewBag.Title = "Victim Details";
+}
+
+<h2>@Model.FullName</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Personal Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.FirstName)</dt>
+                    <dd>@Html.DisplayFor(model => model.FirstName)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.LastName)</dt>
+                    <dd>@Html.DisplayFor(model => model.LastName)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.PhoneNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.PhoneNumber)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+                    <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+                    <dd>@Html.DisplayFor(model => model.Address)</dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+                    <dd>@Html.DisplayFor(model => model.DateOfBirth)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Case Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.CaseVictims.Count)</dt>
+                    <dd>
+                        @if (Model.CaseVictims != null && Model.CaseVictims.Any())
+                        {
+                            <ul class="list-group">
+                                @foreach (var caseVictim in Model.CaseVictims)
+                                {
+                                    <li class="list-group-item">
+                                        @caseVictim.Case?.CaseName - @caseVictim.Case?.CaseType
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>No cases associated with this victim.</p>
+                        }
+                    </dd>
+
+                    <dt>@Html.DisplayNameFor(model => model.VictimID)</dt>
+                    <dd>@Html.DisplayFor(model => model.VictimID)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VictimID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>

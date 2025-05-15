@@ -1,0 +1,33 @@
+﻿@model CriminalManagementSystem.Models.Case
+
+@{
+    ViewBag.Title = "Close Case";
+}
+<h2>Close Case</h2>
+
+<h3>Are you sure you want to close this case?</h3>
+<div>
+    <h4>Case: @Model.CaseNumber</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Case Title</dt>
+        <dd>@Model.CaseTitle</dd>
+        <dt>Status</dt>
+        <dd>@Model.Status</dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.CaseID)
+
+        <div class="form-group">
+            <label class="control-label">Closing Notes</label>
+            @Html.TextArea("ClosingNotes", "", new { @class = "form-control", rows = 3 })
+        </div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Close Case" class="btn btn-danger" />
+            @Html.ActionLink("Cancel", "Details", new { id = Model.CaseID }, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

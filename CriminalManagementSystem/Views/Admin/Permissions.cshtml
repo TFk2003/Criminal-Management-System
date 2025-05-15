@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.Permission>
+
+@{
+    ViewBag.Title = "Permission Management";
+}
+
+<h2>Permission Management</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Permission Name</th>
+            <th>Description</th>
+            <th>Module</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permission in Model)
+        {
+            <tr>
+                <td>@permission.PermissionName</td>
+                <td>@permission.Description</td>
+                <td>@permission.Module</td>
+            </tr>
+        }
+    </tbody>
+</table>

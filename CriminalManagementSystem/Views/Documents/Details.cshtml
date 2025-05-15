@@ -1,0 +1,90 @@
+﻿@*@model CriminalManagementSystem.Models.Document
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Document</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Case.CaseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Case.CaseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Criminal.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Criminal.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentType.TypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Incident.IncidentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Incident.IncidentNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UploadedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DocumentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

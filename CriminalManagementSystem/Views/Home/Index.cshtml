@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    <h1>Criminal Management System</h1>
+    <p class="lead">Comprehensive system for managing criminal records, cases, and law enforcement operations.</p>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <h2>Witnesses</h2>
+        <p>Maintain records of witnesses linked to cases.</p>
+        <p>@Html.ActionLink("View Witnesses", "Index", "Witnesses", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Victims</h2>
+        <p>Track victim details and case associations.</p>
+        <p>@Html.ActionLink("View Victims", "Index", "Victims", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Warrants</h2>
+        <p>Manage arrest warrants and issuance details.</p>
+        <p>@Html.ActionLink("View Warrants", "Index", "Warrants", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Incidents</h2>
+        <p>Log criminal incidents and their initial proper reporting.</p>
+        <p>@Html.ActionLink("View Incidents", "Index", "Incidents", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Documents</h2>
+        <p>Store and manage legal and identification documents.</p>
+        <p>@Html.ActionLink("View Documents", "Index", "Documents", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Probation Officers</h2>
+        <p>Manage probation officer assignments and profiles.</p>
+        <p>@Html.ActionLink("View Officers", "Index", "ProbationOfficers", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Inmate Bookings</h2>
+        <p>View and manage inmate bookings across facilities.</p>
+        <p>@Html.ActionLink("View Bookings", "Index", "InmateBookings", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+
+    <div class="col-md-3">
+        <h2>Courts</h2>
+        <p>Maintain records of courts handling criminal cases.</p>
+        <p>@Html.ActionLink("View Courts", "Index", "Courts", null, new { @class = "btn btn-secondary" })</p>
+    </div>
+</div>

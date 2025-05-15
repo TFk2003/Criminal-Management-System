@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CriminalManagementSystem.Models.Role>
+
+@{
+    ViewBag.Title = "Role Management";
+}
+
+<h2>Role Management</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateRole", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Role Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.RoleName</td>
+                <td>@role.Description</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditRole", new { id = role.RoleID }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Permissions", "RolePermissions", new { id = role.RoleID }, new { @class = "btn btn-sm btn-info" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

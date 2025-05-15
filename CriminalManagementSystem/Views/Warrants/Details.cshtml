@@ -1,0 +1,44 @@
+﻿@model CriminalManagementSystem.Models.Warrant
+
+@{
+    ViewBag.Title = "Warrant Details";
+}
+
+<h2>Warrant Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Warrant Number</dt>
+            <dd class="col-sm-9">@Model.WarrantNumber</dd>
+
+            <dt class="col-sm-3">Criminal</dt>
+            <dd class="col-sm-9">@Model.Criminal.FullName</dd>
+
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">@Model.WarrantType</dd>
+
+            <dt class="col-sm-3">Issued Date</dt>
+            <dd class="col-sm-9">@Model.IssueDate.ToString("d")</dd>
+
+            <dt class="col-sm-3">Expiration Date</dt>
+            <dd class="col-sm-9">@Model.ExpirationDate</dd>
+
+            <dt class="col-sm-3">Issuing Judge</dt>
+            <dd class="col-sm-9">@Model.IssuingJudge</dd>
+
+            <dt class="col-sm-3">Descripiton</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.Status == "Active" ? "bg-success" : "bg-danger")">
+                    @Model.Status
+                </span>
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="mt-3">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>

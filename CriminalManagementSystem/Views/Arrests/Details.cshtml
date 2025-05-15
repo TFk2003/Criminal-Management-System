@@ -1,0 +1,28 @@
+﻿@model CriminalManagementSystem.Models.Arrest
+
+@{
+    ViewBag.Title = "Arrest Details";
+}
+
+<h2>Arrest Details</h2>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Criminal</dt>
+            <dd class="col-sm-9">@(Model.Criminal.FirstName + ' ' + Model.Criminal.MiddleName + ' ' + Model.Criminal.LastName)</dd>
+
+            <dt class="col-sm-3">Arrest Date</dt>
+            <dd class="col-sm-9">@Model.ArrestDate.ToString("g")</dd>
+
+            <dt class="col-sm-3">Location</dt>
+            <dd class="col-sm-9">@Model.ArrestLocation</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">@Model.Status</dd>
+        </dl>
+    </div>
+</div>
+<div class="mt-3">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ArrestID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</div>
